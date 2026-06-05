@@ -1,13 +1,23 @@
-import Express, { type Request, type Response } from "express";
-const app = Express();
-const port = 3000
+import Express, { type Application, type Request, type Response } from "express";
+
+// const port = 3000
 import {Pool, Result} from "pg"
+import config from "./config/index.js";
+
+
+const app:Application = Express();
+
+const port= config.port;
+
+
+
 
 app.use(Express.json())
 
 
 const pool = new Pool({
-  connectionString : "postgresql://neondb_owner:npg_tfLjlB4Mvk7x@ep-rough-frog-aqro4uwh-pooler.c-8.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require",
+  connectionString : config.connection_string,
+  
 });
 
 const initDB = async()=>{
@@ -83,9 +93,9 @@ app.put("/user/:id", async (req: Request, res: Response) => {
     password=COALESCE($3,password),
     is_active=COALESCE($4,is_active),
     
-    age=COALESCE($5,age)
+    age=COALESCE($5,age)                                                 
     
-
+                                      
     WHERE id=$6 RETURNING *
     `,
       [name,email, password, is_active, age,id],
