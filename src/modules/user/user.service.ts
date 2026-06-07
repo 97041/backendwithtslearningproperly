@@ -9,6 +9,15 @@ const createuserintodb = async(payload:IUser)=>{
     );
     return result;
 }
+
+const getAllusersfromdb= async()=>{
+    const result = await pool.query(`
+        SELECT * FROM users
+        `);
+
+        return result;
+}
 export const userService ={
     createuserintodb,
+    getAllusersfromdb,
 }

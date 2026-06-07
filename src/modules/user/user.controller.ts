@@ -22,6 +22,30 @@ const createuser=async(req:Request,res:Response)=>{
    }
 }
 
+const getAllusers= async(req:Request,res:Response)=>{
+ try{
+
+  const fetchdata = await userService.getAllusersfromdb();
+ 
+
+  res.status(200).json({
+    success: true,
+    message:"users fetched successfully from neondb",
+    data: fetchdata.rows,
+  });
+ }
+ catch(error:any){
+
+     res.status(500).json({
+      success: false,
+      message: error.message,
+      error: error,
+    });
+    
+ }
+}
+
 export const userController ={
     createuser,
+    getAllusers
 }
