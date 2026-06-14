@@ -17,7 +17,17 @@ const getAllusersfromdb= async()=>{
 
         return result;
 }
+
+
+const deleteuserfromdb = async(id: string)=>{
+     const result = await pool.query(
+      "DELETE FROM users WHERE id = $1 RETURNING *",
+      [id]
+    );
+    return result;
+}
 export const userService ={
     createuserintodb,
     getAllusersfromdb,
+    deleteuserfromdb
 }

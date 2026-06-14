@@ -7,5 +7,6 @@ const router = Router()
 
 router.post('/',userController.createuser);
 router.get("/",userController.getAllusers);
+router.delete("/:id",userController.deleteuser);
 
-export const userRoute = router
+export const userRoute = router;

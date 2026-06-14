@@ -13,6 +13,7 @@ import {Pool, Result} from "pg"
 import config from "./config/index.js";
 import { initDB, pool } from "./db/index.js";
 import { userRoute } from "./modules/user/user.route.js";
+import { profileRoute } from "./modules/profile/profile.route.js";
 
 
 const app:Application = Express();
@@ -71,32 +72,32 @@ app.get('/getuser/:id',async(req,res)=>{
 
 
 
-app.delete('/user/:id',async(req:Request,res:Response)=>{
-  const {id}=req.params;
+// app.delete('/user/:id',async(req:Request,res:Response)=>{
+//   const {id}=req.params;
 
-  try{
+//   try{
 
-    const results= await pool.query(
-      `Delete from users where id=$1`,
-      [id]
-    );
-      res.status(201).json({
-      success:true,
-      message:"User created successfully",
-      data: {},
-    });
+//     const results= await pool.query(
+//       `Delete from users where id=$1`,
+//       [id]
+//     );
+//       res.status(201).json({
+//       success:true,
+//       message:"User created successfully",
+//       data: {},
+//     });
 
-  }
-  catch(error:any){
+//   }
+//   catch(error:any){
 
-       res.status(500).json({
-      success: false,
-      message: error.message,
-      error: error,
-    })
+//        res.status(500).json({
+//       success: false,
+//       message: error.message,
+//       error: error,
+//     })
 
-  }
-})
+//   }
+// })
 
 
 app.put("/user/:id", async (req: Request, res: Response) => {
@@ -148,6 +149,7 @@ app.put("/user/:id", async (req: Request, res: Response) => {
 
 
 app.use('/users',userRoute);
+app.use('/profiles',profileRoute);
 
 // app.post('/users',async(req:Request,res:Response)=>{
 //    const {name,email,password,age} = req.body;
