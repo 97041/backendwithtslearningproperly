@@ -1,15 +1,31 @@
-import { profile } from "node:console";
+import { pool } from "../../db/index.js";
 
-const createuserprofileintodb= async(payload:any)=>{
 
-    const {user_id,bio,address,phone,gender} = payload;
+const createProfileIntoDB = async (payload: any) => {
+    console.log(payload);
 
-    const result = await pool.query(
-        `
-        INSERT INTO profiles(user_id,bio,address,phone,gender) VALUES($1,$2,$3,$4,$5) RETURNING *
-       `,
-       
-        , 
-    )
+  const { user_id, bio, address, phone, gender } = payload;
+  // Fisrt check if the user is exists
+  const user = await pool.query(
+    `
+    SELECT * FROM users WHERE id=$1
+    `,
+    [user_id],
+  );
+  //   console.log(user);
+  if (user.rows.length === 0) {
+    throw new Error("User not exists!");
+  }
 
-}
+  const result = await pool.query(
+    `
+   INSERT INTO profiles(user_id, bio, address, phone, gender) VALUES($1,$2,$3,$4,$5) RETURNING *
+    `,
+    [user_id, bio, address, phone, gender],
+  );
+  return result;
+};
+
+export const profileService = {
+  createProfileIntoDB,
+};

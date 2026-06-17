@@ -14,6 +14,7 @@ import config from "./config/index.js";
 import { initDB, pool } from "./db/index.js";
 import { userRoute } from "./modules/user/user.route.js";
 import { profileRoute } from "./modules/profile/profile.route.js";
+import { authRoute } from "./modules/auth/auth.route.js";
 
 
 const app:Application = Express();
@@ -150,6 +151,7 @@ app.put("/user/:id", async (req: Request, res: Response) => {
 
 app.use('/users',userRoute);
 app.use('/profiles',profileRoute);
+app.use('/login',authRoute);
 
 // app.post('/users',async(req:Request,res:Response)=>{
 //    const {name,email,password,age} = req.body;
