@@ -23,6 +23,7 @@ const createuser=async(req:Request,res:Response)=>{
 }
 
 const getAllusers= async(req:Request,res:Response)=>{
+  console.log(req.user);
  try{
 
   const fetchdata = await userService.getAllusersfromdb();

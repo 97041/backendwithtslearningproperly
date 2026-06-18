@@ -15,6 +15,8 @@ import { initDB, pool } from "./db/index.js";
 import { userRoute } from "./modules/user/user.route.js";
 import { profileRoute } from "./modules/profile/profile.route.js";
 import { authRoute } from "./modules/auth/auth.route.js";
+import logger from "./middleware/logger.js";
+
 
 
 const app:Application = Express();
@@ -24,7 +26,8 @@ const port= config.port;
 
 
 
-app.use(Express.json())
+app.use(Express.json());
+app.use(logger);
 
 
 
